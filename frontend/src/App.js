@@ -7,20 +7,74 @@ import ProfilePage from "./pages/ProfilePage";
 import PreviousRecords from "./pages/PreviousRecords";
 import ManualAutomation from './pages/ManualAutomation';
 import AboutPage from "./pages/AboutPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
+import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/records" element={<PreviousRecords />} />
-        <Route path="/manual-automation" element={<ManualAutomation />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
-    </Router>
+    <SmoothScrollProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            )}
+          />
+          <Route
+            path="/register"
+            element={(
+              <PublicRoute>
+                <RegisterPage />
+              </PublicRoute>
+            )}
+          />
+          <Route
+            path="/dashboard"
+            element={(
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/profile"
+            element={(
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/records"
+            element={(
+              <ProtectedRoute>
+                <PreviousRecords />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/manual-automation"
+            element={(
+              <ProtectedRoute>
+                <ManualAutomation />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/about"
+            element={(
+              <ProtectedRoute>
+                <AboutPage />
+              </ProtectedRoute>
+            )}
+          />
+        </Routes>
+      </Router>
+    </SmoothScrollProvider>
   );
 }
 

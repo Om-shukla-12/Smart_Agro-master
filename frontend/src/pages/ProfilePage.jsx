@@ -22,6 +22,20 @@ function ProfilePage() {
     fetchProfile();
   }, []);
 
+  const beginEditing = () => {
+    setUpdatedFarmer({ ...farmer });
+    setImagePreview(farmer.profilePicture || null);
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setUpdatedFarmer({ ...farmer });
+    setImagePreview(farmer.profilePicture || null);
+    setPassword('');
+    setConfirmPassword('');
+    setIsEditing(false);
+  };
+
   const fetchProfile = async () => {
     try {
       const response = await axiosInstance.get('/auth/profile');
@@ -34,6 +48,8 @@ function ProfilePage() {
   };
 
   const handlePictureUpload = (event) => {
+    if (!isEditing) return;
+
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -46,10 +62,28 @@ function ProfilePage() {
   };
 
   const handleUpdateProfile = async () => {
+    if (!isEditing) {
+      alert('Click "Edit Profile" first to update your profile details.');
+      return;
+    }
+
+    if (!updatedFarmer.name || !updatedFarmer.name.trim()) {
+      alert('Name is required.');
+      return;
+    }
+
     try {
-      const response = await axiosInstance.put('/auth/profile', updatedFarmer);
+      const response = await axiosInstance.put('/auth/profile', {
+        name: updatedFarmer.name.trim(),
+        role: updatedFarmer.role,
+        profilePicture: updatedFarmer.profilePicture,
+      });
       setFarmer(response.data.farmer);
+      setUpdatedFarmer(response.data.farmer);
+      setImagePreview(response.data.farmer.profilePicture || null);
       setIsEditing(false);
+      setPassword('');
+      setConfirmPassword('');
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -58,6 +92,16 @@ function ProfilePage() {
   };
 
   const handlePasswordUpdate = async () => {
+    if (!isEditing) {
+      alert('Click "Edit Profile" first to update your password.');
+      return;
+    }
+
+    if (!password || !confirmPassword) {
+      alert('Please enter password in both fields.');
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
@@ -82,7 +126,7 @@ function ProfilePage() {
     try {
       await axiosInstance.delete('/auth/delete-account');
       alert('Account deleted successfully!');
-      window.location.href = '/login'; // Redirect after deletion
+      window.location.href = '/'; // Redirect after deletion
     } catch (error) {
       console.error('Error deleting account:', error);
       alert('Failed to delete account.');
@@ -97,21 +141,17 @@ function ProfilePage() {
           <h1 className="profile-heading"> Your Profile</h1>
           {/* Profile Card */}
           <div className="profile-card">
-            {/* <img
-              src={imagePreview
-                || "👤" 
-                // || 'https://via.placeholder.com/150'
-              }
-              // alt="profile photo"
-              className="profile-picture"
-            /> */}
-            <h1>👤</h1>
+            {imagePreview ? (
+              <img src={imagePreview} alt="Profile" className="profile-picture" />
+            ) : (
+              <div className="profile-avatar-fallback">👤</div>
+            )}
             {!isEditing ? (
               <div className="profile-info">
                 <p><strong>Name:</strong> {farmer.name}</p>
                 <p><strong>Email:</strong> {farmer.email}</p>
                 <p><strong>Role:</strong> {farmer.role}</p>
-                <button className="edit-button" onClick={() => setIsEditing(true)}>
+                <button className="edit-button" onClick={beginEditing}>
                   Edit Profile
                 </button>
               </div>
@@ -134,47 +174,43 @@ function ProfilePage() {
                   <input
                     type="email"
                     value={updatedFarmer.email}
-                    onChange={(e) => setUpdatedFarmer({ ...updatedFarmer, email: e.target.value })}
+                    className="readonly-field"
+                    disabled
                   />
                 </label>
-                <button className="save-button" onClick={handleUpdateProfile}>Save</button>
-                <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                <p className="profile-help-text">Email cannot be changed.</p>
+                <label>
+                  New Password:
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </label>
+                <label>
+                  Confirm Password:
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </label>
+                <div className="profile-action-row">
+                  <button className="update-button" onClick={handlePasswordUpdate}>
+                    Update Password
+                  </button>
+                  <button className="save-button" onClick={handleUpdateProfile}>Save</button>
+                  <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Account Settings */}
-          <section className="account-settings">
-            <h2>⚙️ Account Settings</h2>
-            <div className="password-update">
-              <h3>Update Password</h3>
-              <label>
-                New Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
-              <label>
-                Confirm Password:
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </label>
-              <button className="update-button" onClick={handlePasswordUpdate}>
-                Update Password
-              </button>
-            </div>
-            <div className="account-delete">
-              <h3>Delete Account</h3>
-              <button className="delete-button" onClick={handleAccountDeletion}>
-                Delete Account
-              </button>
-            </div>
-          </section>
+          <div className="delete-account-row">
+            <button className="delete-button" onClick={handleAccountDeletion}>
+              Delete Account
+            </button>
+          </div>
 
           {/* Quick Links Section */}
           <section className="quick-links">

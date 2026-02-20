@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../utils/authSession';
 import '../styles/Navbar.css';
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate('/', { replace: true });
   };
 
   return (
@@ -21,7 +28,7 @@ function Navbar() {
         <Link to="/records" className="nav-link">Previous Records</Link>
         <Link to="/manual-automation" className="nav-link">Manual Automation</Link>
         <Link to="/about" className="nav-link">About</Link>
-        <Link to="/" className="nav-link">Logout</Link>
+        <button type="button" className="nav-link nav-logout" onClick={handleLogout}>Logout</button>
       </div>
       <div className="navbar-dropdown">
         <button className="dropdown-toggle" onClick={toggleDropdown}>

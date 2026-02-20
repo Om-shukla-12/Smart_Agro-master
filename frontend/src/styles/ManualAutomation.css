@@ -1,185 +1,113 @@
 .manual-automation {
-  text-align: center;
-  padding: 20px;
-  background: linear-gradient(to bottom, #e8f5e9, #ffffff);
-  border-radius: 10px;
-  box-shadow: var(--box-shadow-light); /* Consistent shadow */
-  max-width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
+  width: min(94%, 1240px);
+  margin: 10px auto 18px;
+  padding: 26px;
+  border-radius: 22px;
+  border: 1px solid rgba(197, 228, 212, 0.8);
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Title Styling */
-h1 {
-  font-size: 2.5rem;
-  color: var(--primary-color); /* Consistent primary color */
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: bold;
+.manual-title {
+  text-align: center;
+  color: var(--brand-900);
+  font-size: clamp(1.7rem, 2.8vw, 2.25rem);
+  margin-bottom: 8px;
 }
 
 .description {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 20px;
-  font-style: italic;
-  padding: 0 10px;
-}
-
-.pump-control {
-  margin: 20px 0;
-}
-
-.pump-toggle {
-  display: inline-block;
-  width: 100%;
-  max-width: 150px;
-  height: 70px;
-  line-height: 70px;
-  border-radius: 35px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  color: white;
-  text-transform: uppercase;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-}
-
-.pump-toggle.on {
-  background-color: #4caf50;
-  transform: scale(1.1);
-}
-
-.pump-toggle.off {
-  background-color: #f44336;
-  transform: scale(1.1);
-}
-
-.pump-toggle:hover {
-  opacity: 0.8;
-}
-
-.pump-status {
-  font-size: 1.1rem;
-  color: #333;
-  margin-top: 10px;
-}
-
-.set-timer {
-  margin-top: 30px;
   text-align: center;
+  color: #577166;
+  margin-bottom: 18px;
 }
 
-.set-timer input {
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
-  transition: border 0.3s ease-in-out;
-  width: 100%;
-  max-width: 250px;
+.manual-control-grid,
+.manual-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.manual-info-grid {
+  margin-top: 16px;
+}
+
+.panel-card {
+  border-radius: 14px;
+  border: 1px solid #d6e8dc;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 20px rgba(18, 69, 49, 0.09);
+  padding: 18px;
+}
+
+.panel-card h2 {
+  color: var(--brand-700);
+  font-size: 1.2rem;
   margin-bottom: 10px;
 }
 
-
-.set-timer button:hover {
-  background-color: #0056b3;
+.pump-control {
+  text-align: center;
 }
 
-
-.additional-info,
-.how-it-works {
-  background-color: #fff;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  text-align: left;
-  transform: translateY(10px);
-  opacity: 0;
-  animation: fadeIn 1s forwards;
+.pump-toggle {
+  width: auto;
+  min-width: 125px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 1.1rem;
 }
 
-.additional-info h2,
-.how-it-works h2 {
-  color: #0d47a1;
+.pump-toggle.on {
+  background: linear-gradient(135deg, #2fa56f, #1d7b52);
+}
+
+.pump-toggle.off {
+  background: linear-gradient(135deg, #dc4f4a, #c13430);
+}
+
+.pump-status {
+  margin-top: 10px;
+  color: #567267;
+  font-size: 0.92rem;
+}
+
+.set-timer input {
+  max-width: 280px;
+}
+
+.set-timer button {
+  width: auto;
+  min-width: 110px;
+  padding: 8px 14px;
 }
 
 .additional-info p,
 .how-it-works ol {
-  color: #333;
+  color: #51695f;
   line-height: 1.6;
 }
 
 .how-it-works ol {
-  margin-left: 20px;
+  padding-left: 18px;
 }
 
-@keyframes fadeIn {
-  from {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+@media (max-width: 980px) {
+  .manual-control-grid,
+  .manual-info-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 760px) {
   .manual-automation {
-    padding: 15px;
+    width: 95%;
+    padding: 16px;
+    border-radius: 16px;
   }
 
-  h1 {
-    font-size: 2rem;
-  }
-
-  .pump-toggle {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .set-timer input {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .set-timer button {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .additional-info,
-  .how-it-works {
-    padding: 15px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  .set-timer input,
-  .set-timer button {
-    font-size: 0.9rem;
-  }
-
-  .manual-automation {
-    padding: 10px;
-  }
-
-  .additional-info,
-  .how-it-works {
-    padding: 10px;
-    font-size: 0.8rem;
+  .panel-card {
+    padding: 14px;
   }
 }

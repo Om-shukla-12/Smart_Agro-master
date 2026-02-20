@@ -74,43 +74,47 @@ const ManualAutomation = () => {
     <>
       <Navbar />
       <div className="manual-automation">
-        <h1>Manual Automation</h1>
+        <h1 className="manual-title">Manual Automation</h1>
         <p className="description">Manage your pump operation efficiently with manual and timer-based controls.</p>
-        <div className="pump-control">
-          <button
-            className={`pump-toggle ${pumpState ? "on" : "off"}`}
-            onClick={handlePumpToggle}
-          >
-            {pumpState ? "ON" : "OFF"}
-          </button>
-          <p className="pump-status">
-            Pump has been ON for: {pumpState ? `${Math.floor(timer / 60)} minutes` : "0 minutes"}
-          </p>
+        <div className="manual-control-grid">
+          <div className="pump-control panel-card">
+            <button
+              className={`pump-toggle ${pumpState ? "on" : "off"}`}
+              onClick={handlePumpToggle}
+            >
+              {pumpState ? "ON" : "OFF"}
+            </button>
+            <p className="pump-status">
+              Pump has been ON for: {pumpState ? `${Math.floor(timer / 60)} minutes` : "0 minutes"}
+            </p>
+          </div>
+
+          <div className="set-timer panel-card">
+            <h2>Set Timer</h2>
+            <input
+              type="number"
+              placeholder="Enter time in seconds"
+              value={setTime}
+              onChange={(e) => setSetTime(e.target.value)}
+            />
+            <button onClick={handleSetTimer}>Set Timer</button>
+          </div>
         </div>
 
-        <div className="set-timer">
-          <h2>Set Timer</h2>
-          <input
-            type="number"
-            placeholder="Enter time in seconds"
-            value={setTime}
-            onChange={(e) => setSetTime(e.target.value)}
-          />
-          <button onClick={handleSetTimer}>Set Timer</button>
-        </div>
+        <div className="manual-info-grid">
+          <div className="additional-info panel-card">
+            <h2>Why Automation?</h2>
+            <p>Automation helps in saving time, energy, and resources. With the timer feature, you can set a predefined duration for pump operation, ensuring efficiency and preventing overuse.</p>
+          </div>
 
-        <div className="additional-info">
-          <h2>Why Automation?</h2>
-          <p>Automation helps in saving time, energy, and resources. With the timer feature, you can set a predefined duration for pump operation, ensuring efficiency and preventing overuse.</p>
-        </div>
-
-        <div className="how-it-works">
-          <h2>How It Works</h2>
-          <ol>
-            <li>Turn the pump ON or OFF manually using the toggle button.</li>
-            <li>Set a timer to automate the pump operation for a specific duration.</li>
-            <li>The system will automatically turn off the pump once the timer expires.</li>
-          </ol>
+          <div className="how-it-works panel-card">
+            <h2>How It Works</h2>
+            <ol>
+              <li>Turn the pump ON or OFF manually using the toggle button.</li>
+              <li>Set a timer to automate the pump operation for a specific duration.</li>
+              <li>The system will automatically turn off the pump once the timer expires.</li>
+            </ol>
+          </div>
         </div>
       </div>
       <Footer />

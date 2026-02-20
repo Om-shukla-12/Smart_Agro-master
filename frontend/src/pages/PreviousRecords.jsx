@@ -5,7 +5,6 @@ import axiosInstance from '../utils/axiosInstance';
 import '../styles/PreviousRecords.css';
 
 function PreviousRecords() {
-  const [records, setRecords] = useState([]);
   const [groupedRecords, setGroupedRecords] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +28,6 @@ function PreviousRecords() {
         return acc;
       }, {});
 
-      setRecords(fetchedRecords);
       setGroupedRecords(grouped);
     } catch (error) {
       setError('Error fetching records.');
@@ -41,8 +39,8 @@ function PreviousRecords() {
   return (
     <>
       <Navbar />
-      <div className="container">
-        <h1>Previous Records</h1>
+      <div className="records-page">
+        <h1 className="records-title">Previous Records</h1>
 
         {loading ? (
           <div className="loading">
