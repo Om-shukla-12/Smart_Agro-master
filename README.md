@@ -155,9 +155,5 @@ MERN-IoT-Agriculture/
 - **User Roles**: Role-based access for admin and farmer accounts.
 - **Data Export**: Enable CSV export of historical data for offline analysis.
 
-## 📬 Contact
-For questions or contributions, reach out:
-
-**Ayush Kumar**: [[GitHub Profile](https://github.com/ayushchahat)](#)
 
 **Happy Farming with Smart Agro! 🌾
